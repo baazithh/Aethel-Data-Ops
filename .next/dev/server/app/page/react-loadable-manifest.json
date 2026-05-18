@@ -1,1 +1,30 @@
-{}
+{
+  "[project]/src/components/ExecutiveScorecard.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/ExecutiveScorecard.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/src_components_ExecutiveScorecard_tsx_0luqb36._.js",
+      "static/chunks/src_components_ExecutiveScorecard_tsx_0pzbj7h._.js"
+    ]
+  },
+  "[project]/src/components/CognitiveChatCopilot.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/CognitiveChatCopilot.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/src_components_CognitiveChatCopilot_tsx_0h_1crg._.js",
+      "static/chunks/src_components_CognitiveChatCopilot_tsx_0pzbj7h._.js"
+    ]
+  },
+  "[project]/src/components/StreamingTerminal.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/StreamingTerminal.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/src_components_StreamingTerminal_tsx_0clh6.~._.js",
+      "static/chunks/src_components_StreamingTerminal_tsx_0pzbj7h._.js"
+    ]
+  },
+  "[project]/src/components/TopologyMap.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/TopologyMap.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/src_components_TopologyMap_tsx_08rm41s._.js",
+      "static/chunks/src_components_TopologyMap_tsx_0pzbj7h._.js"
+    ]
+  }
+}
