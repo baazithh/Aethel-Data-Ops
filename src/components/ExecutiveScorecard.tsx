@@ -4,47 +4,59 @@ import { useEffect, useState } from "react";
 
 interface Props {
   isHealing: boolean;
+  fixes: number;
+  hoursSaved: number;
+  latencyMs: number;
+  slaFill: number;
+  backendOnline: boolean;
 }
 
-export default function ExecutiveScorecard({ isHealing }: Props) {
-  const [fixes, setFixes] = useState(47);
-  const [hoursSaved, setHoursSaved] = useState(18.5);
-  const [latencyMs, setLatencyMs] = useState(183);
-  const [slaFill, setSlaFill] = useState(78);
-  const [uptime, setUptime] = useState("100.00");
+export default function ExecutiveScorecard({
+  isHealing,
+  fixes,
+  hoursSaved,
+  latencyMs,
+  slaFill,
+  backendOnline,
+}: Props) {
+  const [uptime] = useState("100.00");
 
-  // Live-jitter the latency counter
-  useEffect(() => {
-    const id = setInterval(() => {
-      setLatencyMs((v) => {
-        const jitter = Math.random() * 30 - 15;
-        return Math.max(60, Math.min(480, Math.round(v + jitter)));
-      });
-      setSlaFill((v) => {
-        const jitter = Math.random() * 6 - 3;
-        return Math.max(55, Math.min(97, v + jitter));
-      });
-    }, 1200);
-    return () => clearInterval(id);
-  }, []);
-
-  // When healing fires, increment counters afterwards
-  useEffect(() => {
-    if (!isHealing) return;
-    const t = setTimeout(() => {
-      setFixes((v) => v + 1);
-      setHoursSaved((v) => parseFloat((v + 0.5).toFixed(1)));
-    }, 5500);
-    return () => clearTimeout(t);
-  }, [isHealing]);
-
-  const slaColor = latencyMs < 250 ? "var(--emerald)" : "var(--amber)";
+  const slaColor =
+    latencyMs < 250
+      ? "var(--emerald)"
+      : latencyMs < 450
+      ? "var(--amber)"
+      : "var(--red)";
 
   return (
     <div className="panel">
       <div className="panel-header">
         <span className="panel-label">Executive Scorecard</span>
-        <span className="metric-pill green">Live</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {backendOnline ? (
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 9,
+                color: "var(--emerald)",
+                letterSpacing: "0.06em",
+              }}
+            >
+              ● LIVE
+            </span>
+          ) : (
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 9,
+                color: "var(--text-muted)",
+                letterSpacing: "0.06em",
+              }}
+            >
+              ○ LOCAL
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="panel-body">
@@ -90,6 +102,18 @@ export default function ExecutiveScorecard({ isHealing }: Props) {
               >
                 hrs
               </span>
+              {backendOnline && (
+                <span
+                  style={{
+                    fontSize: 9,
+                    color: "var(--emerald)",
+                    fontFamily: "var(--font-mono)",
+                    marginLeft: 4,
+                  }}
+                >
+                  ↑ live
+                </span>
+              )}
             </div>
             <div className="metric-sub">since 00:00 UTC today</div>
           </div>
@@ -98,12 +122,19 @@ export default function ExecutiveScorecard({ isHealing }: Props) {
         {/* Row 3: Data Freshness SLA */}
         <div
           className="metric-card"
-          style={{ marginTop: 0, borderColor: isHealing ? "var(--amber-dim)" : "var(--border)", transition: "border-color 0.4s" }}
+          style={{
+            borderColor: isHealing ? "var(--amber-dim)" : "var(--border)",
+            transition: "border-color 0.4s",
+          }}
         >
           <div className="metric-label">Data Freshness SLA</div>
           <div className="sla-row">
             <div>
-              <div className="sla-label-row">Pipeline end-to-end latency</div>
+              <div className="sla-label-row">
+                {backendOnline
+                  ? "Pipeline end-to-end latency (live)"
+                  : "Pipeline end-to-end latency"}
+              </div>
             </div>
             <div
               className="sla-ms"

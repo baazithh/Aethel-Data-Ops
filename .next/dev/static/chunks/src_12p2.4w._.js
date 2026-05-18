@@ -12,59 +12,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var _s = __turbopack_context__.k.signature();
 "use client";
 ;
-function ExecutiveScorecard({ isHealing }) {
+function ExecutiveScorecard({ isHealing, fixes, hoursSaved, latencyMs, slaFill, backendOnline }) {
     _s();
-    const [fixes, setFixes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(47);
-    const [hoursSaved, setHoursSaved] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(18.5);
-    const [latencyMs, setLatencyMs] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(183);
-    const [slaFill, setSlaFill] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(78);
-    const [uptime, setUptime] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("100.00");
-    // Live-jitter the latency counter
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "ExecutiveScorecard.useEffect": ()=>{
-            const id = setInterval({
-                "ExecutiveScorecard.useEffect.id": ()=>{
-                    setLatencyMs({
-                        "ExecutiveScorecard.useEffect.id": (v)=>{
-                            const jitter = Math.random() * 30 - 15;
-                            return Math.max(60, Math.min(480, Math.round(v + jitter)));
-                        }
-                    }["ExecutiveScorecard.useEffect.id"]);
-                    setSlaFill({
-                        "ExecutiveScorecard.useEffect.id": (v)=>{
-                            const jitter = Math.random() * 6 - 3;
-                            return Math.max(55, Math.min(97, v + jitter));
-                        }
-                    }["ExecutiveScorecard.useEffect.id"]);
-                }
-            }["ExecutiveScorecard.useEffect.id"], 1200);
-            return ({
-                "ExecutiveScorecard.useEffect": ()=>clearInterval(id)
-            })["ExecutiveScorecard.useEffect"];
-        }
-    }["ExecutiveScorecard.useEffect"], []);
-    // When healing fires, increment counters afterwards
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "ExecutiveScorecard.useEffect": ()=>{
-            if (!isHealing) return;
-            const t = setTimeout({
-                "ExecutiveScorecard.useEffect.t": ()=>{
-                    setFixes({
-                        "ExecutiveScorecard.useEffect.t": (v)=>v + 1
-                    }["ExecutiveScorecard.useEffect.t"]);
-                    setHoursSaved({
-                        "ExecutiveScorecard.useEffect.t": (v)=>parseFloat((v + 0.5).toFixed(1))
-                    }["ExecutiveScorecard.useEffect.t"]);
-                }
-            }["ExecutiveScorecard.useEffect.t"], 5500);
-            return ({
-                "ExecutiveScorecard.useEffect": ()=>clearTimeout(t)
-            })["ExecutiveScorecard.useEffect"];
-        }
-    }["ExecutiveScorecard.useEffect"], [
-        isHealing
-    ]);
-    const slaColor = latencyMs < 250 ? "var(--emerald)" : "var(--amber)";
+    const [uptime] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("100.00");
+    const slaColor = latencyMs < 250 ? "var(--emerald)" : latencyMs < 450 ? "var(--amber)" : "var(--red)";
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "panel",
         children: [
@@ -76,21 +27,49 @@ function ExecutiveScorecard({ isHealing }) {
                         children: "Executive Scorecard"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                        lineNumber: 46,
+                        lineNumber: 34,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "metric-pill green",
-                        children: "Live"
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        style: {
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 8
+                        },
+                        children: backendOnline ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                            style: {
+                                fontFamily: "var(--font-mono)",
+                                fontSize: 9,
+                                color: "var(--emerald)",
+                                letterSpacing: "0.06em"
+                            },
+                            children: "● LIVE"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/ExecutiveScorecard.tsx",
+                            lineNumber: 37,
+                            columnNumber: 13
+                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                            style: {
+                                fontFamily: "var(--font-mono)",
+                                fontSize: 9,
+                                color: "var(--text-muted)",
+                                letterSpacing: "0.06em"
+                            },
+                            children: "○ LOCAL"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/ExecutiveScorecard.tsx",
+                            lineNumber: 48,
+                            columnNumber: 13
+                        }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                        lineNumber: 47,
+                        lineNumber: 35,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                lineNumber: 45,
+                lineNumber: 33,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -107,7 +86,7 @@ function ExecutiveScorecard({ isHealing }) {
                                         children: "System Uptime"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 54,
+                                        lineNumber: 66,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -118,7 +97,7 @@ function ExecutiveScorecard({ isHealing }) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 55,
+                                        lineNumber: 67,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -131,18 +110,18 @@ function ExecutiveScorecard({ isHealing }) {
                                             children: "Stable"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                            lineNumber: 57,
+                                            lineNumber: 69,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 56,
+                                        lineNumber: 68,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                lineNumber: 53,
+                                lineNumber: 65,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -153,7 +132,7 @@ function ExecutiveScorecard({ isHealing }) {
                                         children: "Autonomous Fixes Today"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 62,
+                                        lineNumber: 74,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -165,7 +144,7 @@ function ExecutiveScorecard({ isHealing }) {
                                         children: fixes
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 63,
+                                        lineNumber: 75,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -176,19 +155,19 @@ function ExecutiveScorecard({ isHealing }) {
                                         children: "auto-remediated events"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 72,
+                                        lineNumber: 84,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                lineNumber: 61,
+                                lineNumber: 73,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                        lineNumber: 52,
+                        lineNumber: 64,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -201,7 +180,7 @@ function ExecutiveScorecard({ isHealing }) {
                                     children: "Estimated Engineering Hours Saved"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 93,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -216,7 +195,7 @@ function ExecutiveScorecard({ isHealing }) {
                                             children: hoursSaved
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                            lineNumber: 83,
+                                            lineNumber: 95,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -228,13 +207,26 @@ function ExecutiveScorecard({ isHealing }) {
                                             children: "hrs"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                            lineNumber: 84,
+                                            lineNumber: 96,
                                             columnNumber: 15
+                                        }, this),
+                                        backendOnline && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            style: {
+                                                fontSize: 9,
+                                                color: "var(--emerald)",
+                                                fontFamily: "var(--font-mono)",
+                                                marginLeft: 4
+                                            },
+                                            children: "↑ live"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/ExecutiveScorecard.tsx",
+                                            lineNumber: 106,
+                                            columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                    lineNumber: 82,
+                                    lineNumber: 94,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -242,24 +234,23 @@ function ExecutiveScorecard({ isHealing }) {
                                     children: "since 00:00 UTC today"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                    lineNumber: 94,
+                                    lineNumber: 118,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                            lineNumber: 80,
+                            lineNumber: 92,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                        lineNumber: 79,
+                        lineNumber: 91,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "metric-card",
                         style: {
-                            marginTop: 0,
                             borderColor: isHealing ? "var(--amber-dim)" : "var(--border)",
                             transition: "border-color 0.4s"
                         },
@@ -269,7 +260,7 @@ function ExecutiveScorecard({ isHealing }) {
                                 children: "Data Freshness SLA"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                lineNumber: 103,
+                                lineNumber: 130,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -278,15 +269,15 @@ function ExecutiveScorecard({ isHealing }) {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "sla-label-row",
-                                            children: "Pipeline end-to-end latency"
+                                            children: backendOnline ? "Pipeline end-to-end latency (live)" : "Pipeline end-to-end latency"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                            lineNumber: 106,
+                                            lineNumber: 133,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 105,
+                                        lineNumber: 132,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -301,13 +292,13 @@ function ExecutiveScorecard({ isHealing }) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 108,
+                                        lineNumber: 139,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                lineNumber: 104,
+                                lineNumber: 131,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -321,12 +312,12 @@ function ExecutiveScorecard({ isHealing }) {
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                    lineNumber: 116,
+                                    lineNumber: 147,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                lineNumber: 115,
+                                lineNumber: 146,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -343,42 +334,42 @@ function ExecutiveScorecard({ isHealing }) {
                                         children: "0ms"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 135,
+                                        lineNumber: 166,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: "SLA threshold: 500ms"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                        lineNumber: 136,
+                                        lineNumber: 167,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                                lineNumber: 125,
+                                lineNumber: 156,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                        lineNumber: 99,
+                        lineNumber: 123,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-                lineNumber: 50,
+                lineNumber: 62,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ExecutiveScorecard.tsx",
-        lineNumber: 44,
+        lineNumber: 32,
         columnNumber: 5
     }, this);
 }
-_s(ExecutiveScorecard, "a0RZSfY1ktJgqfFshuGTqaGzVrI=");
+_s(ExecutiveScorecard, "s3L9fNhINi4GHqfLSze/Z5OORM8=");
 _c = ExecutiveScorecard;
 var _c;
 __turbopack_context__.k.register(_c, "ExecutiveScorecard");
@@ -680,14 +671,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var _s = __turbopack_context__.k.signature();
 "use client";
 ;
-function now() {
+// ── Module-level line ID counter (persists across re-renders without state) ───
+let internalLineId = 0;
+function nowStr() {
     return new Date().toISOString().replace("T", " ").substring(0, 23);
 }
-let lineId = 0;
 function mkLine(agent, agentClass, msg, msgClass = "info") {
     return {
-        id: lineId++,
-        ts: now(),
+        id: internalLineId++,
+        ts: nowStr(),
         agent,
         agentClass,
         msg,
@@ -707,31 +699,13 @@ const IDLE_POOL = [
     ()=>mkLine("[RefactorAgent]", "refactor", "Hot-reload complete — 0 downtime observed", "info"),
     ()=>mkLine("[SYS]", "system", "Lakehouse compaction scheduled — 06:00 UTC window", "info")
 ];
-const CRASH_SEQUENCE = [
-    ()=>mkLine("[AnomalyDetect]", "anomaly", "⚠  Schema drift detected on topic: order_events_raw", "warn"),
-    ()=>mkLine("[AnomalyDetect]", "anomaly", "Expected field 'item_price' (float) — received 'price_usd' (string)", "error"),
-    ()=>mkLine("[AnomalyDetect]", "anomaly", "Stream partition kafka-p04 suspended — poisoned record intercepted", "error"),
-    ()=>mkLine("[SchemaAgent]", "schema", "Initiating schema diff analysis against registry v3.8.0…", "warn"),
-    ()=>mkLine("[SchemaAgent]", "schema", "Diff resolved: 2 renamed fields, 1 type coercion required", "warn"),
-    ()=>mkLine("[RefactorAgent]", "refactor", "Generating corrective patch — sandboxed execution env spawned", "warn"),
-    ()=>mkLine("[RefactorAgent]", "refactor", "Patch candidate: cast(price_usd as DECIMAL(12,2)) AS item_price", "warn"),
-    ()=>mkLine("[RefactorAgent]", "refactor", "Running synthetic unit test on 10,000 sampled records…", "warn"),
-    ()=>mkLine("[RefactorAgent]", "refactor", "✓ Unit test pass rate: 100.0% — zero null coercions", "success"),
-    ()=>mkLine("[SchemaAgent]", "schema", "Updating Iceberg table metadata — open table schema v3.9.0", "info"),
-    ()=>mkLine("[GitAgent]", "git", "Patch committed: aef7c3d — 'auto: fix order_events_raw schema drift'", "info"),
-    ()=>mkLine("[GitAgent]", "git", "Rollback ref tagged: refs/tags/pre-drift-backup-2", "info"),
-    ()=>mkLine("[RefactorAgent]", "refactor", "Hot-swapping Kafka consumer logic — zero-downtime deployment…", "warn"),
-    ()=>mkLine("[RefactorAgent]", "refactor", "✓ Consumer hot-swapped — partition kafka-p04 resumed", "success"),
-    ()=>mkLine("[AnomalyDetect]", "anomaly", "✓ Stream throughput restored — 4,201 events/sec", "success"),
-    ()=>mkLine("[SYS]", "system", "✓  SELF-HEALING COMPLETE — all partitions healthy", "success")
-];
-function StreamingTerminal({ isHealing }) {
+function StreamingTerminal({ isHealing, injectLines }) {
     _s();
     const [lines, setLines] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const healingRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(false);
     const bottomRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const idleTimerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const prevInjectLen = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(0);
     const push = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "StreamingTerminal.useCallback[push]": (line)=>{
             setLines({
@@ -742,7 +716,7 @@ function StreamingTerminal({ isHealing }) {
             }["StreamingTerminal.useCallback[push]"]);
         }
     }["StreamingTerminal.useCallback[push]"], []);
-    // Populate initial lines only on the client (avoids SSR/client timestamp mismatch)
+    // Populate initial idle lines on mount (client-only — no SSR timestamp mismatch)
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "StreamingTerminal.useEffect": ()=>{
             setLines(Array.from({
@@ -753,10 +727,9 @@ function StreamingTerminal({ isHealing }) {
                     return fn();
                 }
             }["StreamingTerminal.useEffect"]));
-            setMounted(true);
         }
     }["StreamingTerminal.useEffect"], []);
-    // Idle ticker
+    // Idle ticker — pauses during healing
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "StreamingTerminal.useEffect": ()=>{
             idleTimerRef.current = setInterval({
@@ -776,29 +749,30 @@ function StreamingTerminal({ isHealing }) {
     }["StreamingTerminal.useEffect"], [
         push
     ]);
-    // Crash sequence
+    // Sync healing ref so idle ticker pauses correctly
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "StreamingTerminal.useEffect": ()=>{
-            if (!isHealing) return;
-            healingRef.current = true;
-            CRASH_SEQUENCE.forEach({
-                "StreamingTerminal.useEffect": (fn, i)=>{
-                    setTimeout({
-                        "StreamingTerminal.useEffect": ()=>{
-                            push(fn());
-                            if (i === CRASH_SEQUENCE.length - 1) {
-                                healingRef.current = false;
-                            }
-                        }
-                    }["StreamingTerminal.useEffect"], i * 420);
-                }
-            }["StreamingTerminal.useEffect"]);
+            healingRef.current = isHealing;
         }
     }["StreamingTerminal.useEffect"], [
-        isHealing,
+        isHealing
+    ]);
+    // Consume new lines injected from parent (append only new ones)
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "StreamingTerminal.useEffect": ()=>{
+            if (injectLines.length > prevInjectLen.current) {
+                const newOnes = injectLines.slice(prevInjectLen.current);
+                prevInjectLen.current = injectLines.length;
+                newOnes.forEach({
+                    "StreamingTerminal.useEffect": (l)=>push(l)
+                }["StreamingTerminal.useEffect"]);
+            }
+        }
+    }["StreamingTerminal.useEffect"], [
+        injectLines,
         push
     ]);
-    // Auto-scroll
+    // Auto-scroll to bottom
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "StreamingTerminal.useEffect": ()=>{
             bottomRef.current?.scrollIntoView({
@@ -813,14 +787,13 @@ function StreamingTerminal({ isHealing }) {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "panel-header",
-                suppressHydrationWarning: true,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                         className: "panel-label",
                         children: "Autonomous Streaming Terminal"
                     }, void 0, false, {
                         fileName: "[project]/src/components/StreamingTerminal.tsx",
-                        lineNumber: 123,
+                        lineNumber: 98,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -834,13 +807,13 @@ function StreamingTerminal({ isHealing }) {
                         children: isHealing ? "⚡ HEALING" : "● LIVE"
                     }, void 0, false, {
                         fileName: "[project]/src/components/StreamingTerminal.tsx",
-                        lineNumber: 124,
+                        lineNumber: 99,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/StreamingTerminal.tsx",
-                lineNumber: 122,
+                lineNumber: 97,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -855,7 +828,7 @@ function StreamingTerminal({ isHealing }) {
                                     children: l.ts
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/StreamingTerminal.tsx",
-                                    lineNumber: 140,
+                                    lineNumber: 115,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -863,7 +836,7 @@ function StreamingTerminal({ isHealing }) {
                                     children: l.agent
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/StreamingTerminal.tsx",
-                                    lineNumber: 141,
+                                    lineNumber: 116,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -871,43 +844,43 @@ function StreamingTerminal({ isHealing }) {
                                     children: l.msg
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/StreamingTerminal.tsx",
-                                    lineNumber: 142,
+                                    lineNumber: 117,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, l.id, true, {
                             fileName: "[project]/src/components/StreamingTerminal.tsx",
-                            lineNumber: 139,
+                            lineNumber: 114,
                             columnNumber: 11
                         }, this)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         ref: bottomRef
                     }, void 0, false, {
                         fileName: "[project]/src/components/StreamingTerminal.tsx",
-                        lineNumber: 145,
+                        lineNumber: 120,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                         className: "terminal-cursor"
                     }, void 0, false, {
                         fileName: "[project]/src/components/StreamingTerminal.tsx",
-                        lineNumber: 146,
+                        lineNumber: 121,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/StreamingTerminal.tsx",
-                lineNumber: 137,
+                lineNumber: 112,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/StreamingTerminal.tsx",
-        lineNumber: 121,
+        lineNumber: 96,
         columnNumber: 5
     }, this);
 }
-_s(StreamingTerminal, "BgpL2+w0uRFqE1Vgavv9j1z2NhY=");
+_s(StreamingTerminal, "87srlPEHp8QSS8x7ZvyA9wHhlmw=");
 _c = StreamingTerminal;
 var _c;
 __turbopack_context__.k.register(_c, "StreamingTerminal");

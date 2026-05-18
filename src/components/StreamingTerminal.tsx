@@ -1,28 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import type { LogLine } from "@/types/terminal";
 
-interface LogLine {
-  id: number;
-  ts: string;
-  agent: string;
-  agentClass: string;
-  msg: string;
-  msgClass: string;
-}
+// ── Module-level line ID counter (persists across re-renders without state) ───
+let internalLineId = 0;
 
-function now(): string {
+function nowStr(): string {
   return new Date().toISOString().replace("T", " ").substring(0, 23);
 }
 
-let lineId = 0;
 function mkLine(
   agent: string,
   agentClass: string,
   msg: string,
   msgClass = "info"
 ): LogLine {
-  return { id: lineId++, ts: now(), agent, agentClass, msg, msgClass };
+  return { id: internalLineId++, ts: nowStr(), agent, agentClass, msg, msgClass };
 }
 
 const IDLE_POOL: Array<() => LogLine> = [
@@ -39,41 +33,24 @@ const IDLE_POOL: Array<() => LogLine> = [
   () => mkLine("[SYS]", "system", "Lakehouse compaction scheduled — 06:00 UTC window", "info"),
 ];
 
-const CRASH_SEQUENCE: Array<() => LogLine> = [
-  () => mkLine("[AnomalyDetect]", "anomaly", "⚠  Schema drift detected on topic: order_events_raw", "warn"),
-  () => mkLine("[AnomalyDetect]", "anomaly", "Expected field 'item_price' (float) — received 'price_usd' (string)", "error"),
-  () => mkLine("[AnomalyDetect]", "anomaly", "Stream partition kafka-p04 suspended — poisoned record intercepted", "error"),
-  () => mkLine("[SchemaAgent]", "schema", "Initiating schema diff analysis against registry v3.8.0…", "warn"),
-  () => mkLine("[SchemaAgent]", "schema", "Diff resolved: 2 renamed fields, 1 type coercion required", "warn"),
-  () => mkLine("[RefactorAgent]", "refactor", "Generating corrective patch — sandboxed execution env spawned", "warn"),
-  () => mkLine("[RefactorAgent]", "refactor", "Patch candidate: cast(price_usd as DECIMAL(12,2)) AS item_price", "warn"),
-  () => mkLine("[RefactorAgent]", "refactor", "Running synthetic unit test on 10,000 sampled records…", "warn"),
-  () => mkLine("[RefactorAgent]", "refactor", "✓ Unit test pass rate: 100.0% — zero null coercions", "success"),
-  () => mkLine("[SchemaAgent]", "schema", "Updating Iceberg table metadata — open table schema v3.9.0", "info"),
-  () => mkLine("[GitAgent]", "git", "Patch committed: aef7c3d — 'auto: fix order_events_raw schema drift'", "info"),
-  () => mkLine("[GitAgent]", "git", "Rollback ref tagged: refs/tags/pre-drift-backup-2", "info"),
-  () => mkLine("[RefactorAgent]", "refactor", "Hot-swapping Kafka consumer logic — zero-downtime deployment…", "warn"),
-  () => mkLine("[RefactorAgent]", "refactor", "✓ Consumer hot-swapped — partition kafka-p04 resumed", "success"),
-  () => mkLine("[AnomalyDetect]", "anomaly", "✓ Stream throughput restored — 4,201 events/sec", "success"),
-  () => mkLine("[SYS]", "system", "✓  SELF-HEALING COMPLETE — all partitions healthy", "success"),
-];
-
 interface Props {
   isHealing: boolean;
+  /** Lines injected from the parent (SSE events / crash simulation) */
+  injectLines: LogLine[];
 }
 
-export default function StreamingTerminal({ isHealing }: Props) {
+export default function StreamingTerminal({ isHealing, injectLines }: Props) {
   const [lines, setLines] = useState<LogLine[]>([]);
-  const [mounted, setMounted] = useState(false);
   const healingRef = useRef(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const idleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const prevInjectLen = useRef(0);
 
   const push = useCallback((line: LogLine) => {
     setLines((prev) => [...prev.slice(-200), line]);
   }, []);
 
-  // Populate initial lines only on the client (avoids SSR/client timestamp mismatch)
+  // Populate initial idle lines on mount (client-only — no SSR timestamp mismatch)
   useEffect(() => {
     setLines(
       Array.from({ length: 12 }, (_, i) => {
@@ -81,10 +58,9 @@ export default function StreamingTerminal({ isHealing }: Props) {
         return fn();
       })
     );
-    setMounted(true);
   }, []);
 
-  // Idle ticker
+  // Idle ticker — pauses during healing
   useEffect(() => {
     idleTimerRef.current = setInterval(() => {
       if (!healingRef.current) {
@@ -97,29 +73,28 @@ export default function StreamingTerminal({ isHealing }: Props) {
     };
   }, [push]);
 
-  // Crash sequence
+  // Sync healing ref so idle ticker pauses correctly
   useEffect(() => {
-    if (!isHealing) return;
-    healingRef.current = true;
+    healingRef.current = isHealing;
+  }, [isHealing]);
 
-    CRASH_SEQUENCE.forEach((fn, i) => {
-      setTimeout(() => {
-        push(fn());
-        if (i === CRASH_SEQUENCE.length - 1) {
-          healingRef.current = false;
-        }
-      }, i * 420);
-    });
-  }, [isHealing, push]);
+  // Consume new lines injected from parent (append only new ones)
+  useEffect(() => {
+    if (injectLines.length > prevInjectLen.current) {
+      const newOnes = injectLines.slice(prevInjectLen.current);
+      prevInjectLen.current = injectLines.length;
+      newOnes.forEach((l) => push(l));
+    }
+  }, [injectLines, push]);
 
-  // Auto-scroll
+  // Auto-scroll to bottom
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [lines]);
 
   return (
     <div className="panel">
-      <div className="panel-header" suppressHydrationWarning>
+      <div className="panel-header">
         <span className="panel-label">Autonomous Streaming Terminal</span>
         <span
           style={{
