@@ -258,21 +258,21 @@ html, body {
 .panel-body {
   flex: 1;
   overflow: auto;
-  padding: 14px 16px;
+  padding: 10px 14px;
 }
 
 /* ─── Executive Scorecard ────────────────────────────────── */
 .scorecard-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .metric-card {
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 11px 13px;
   background: var(--bg-surface);
   transition: border-color 0.2s ease;
 }
@@ -296,12 +296,12 @@ html, body {
 }
 
 .metric-value {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   line-height: 1;
   color: var(--text-primary);
   font-family: var(--font-mono);
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .metric-value.emerald { color: var(--emerald); }
@@ -366,7 +366,7 @@ html, body {
 
 .fixes-counter {
   font-family: var(--font-mono);
-  font-size: 38px;
+  font-size: 30px;
   font-weight: 700;
   color: var(--emerald);
   line-height: 1;
