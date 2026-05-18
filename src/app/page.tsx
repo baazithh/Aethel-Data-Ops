@@ -52,7 +52,7 @@ export default function Dashboard() {
         </div>
 
         <div className="header-right">
-          <span className="header-timestamp">{clock}</span>
+          <span className="header-timestamp" suppressHydrationWarning>{clock}</span>
 
           <div className="header-divider" />
 

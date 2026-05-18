@@ -63,18 +63,25 @@ interface Props {
 }
 
 export default function StreamingTerminal({ isHealing }: Props) {
-  const [lines, setLines] = useState<LogLine[]>(() =>
-    Array.from({ length: 12 }, (_, i) => {
-      const fn = IDLE_POOL[i % IDLE_POOL.length];
-      return fn();
-    })
-  );
+  const [lines, setLines] = useState<LogLine[]>([]);
+  const [mounted, setMounted] = useState(false);
   const healingRef = useRef(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const idleTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const push = useCallback((line: LogLine) => {
     setLines((prev) => [...prev.slice(-200), line]);
+  }, []);
+
+  // Populate initial lines only on the client (avoids SSR/client timestamp mismatch)
+  useEffect(() => {
+    setLines(
+      Array.from({ length: 12 }, (_, i) => {
+        const fn = IDLE_POOL[i % IDLE_POOL.length];
+        return fn();
+      })
+    );
+    setMounted(true);
   }, []);
 
   // Idle ticker
@@ -112,7 +119,7 @@ export default function StreamingTerminal({ isHealing }: Props) {
 
   return (
     <div className="panel">
-      <div className="panel-header">
+      <div className="panel-header" suppressHydrationWarning>
         <span className="panel-label">Autonomous Streaming Terminal</span>
         <span
           style={{
@@ -127,7 +134,7 @@ export default function StreamingTerminal({ isHealing }: Props) {
         </span>
       </div>
 
-      <div className="terminal-body">
+      <div className="terminal-body" suppressHydrationWarning>
         {lines.map((l) => (
           <div key={l.id} className="terminal-line">
             <span className="t-ts">{l.ts}</span>
